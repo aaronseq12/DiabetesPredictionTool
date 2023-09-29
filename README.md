@@ -3,17 +3,15 @@
 About me: 
 My name is Aaron Sequeira, I am currently pursuing my Btech in Information Technology from Manipal University Jaipur, where I am building a solid foundation in various facets of the field. My keen interest spans several domains, including Full stack web development, Cloud Computing with a focus on AWS, Data Analytics, Machine Learning, and Business & Project Management.
 
-In addition to my technical skills, I am a strong communicator and team player and can work effectively with technical and non-technical stakeholders. I am highly motivated and thrive in fast-paced, dynamic environments where I can utilize my skills and expertise to drive positive outcomes.
+I bring not only technical prowess but also effective communication and teamwork skills. I thrive in dynamic environments, excel at problem-solving, and have a track record of delivering complex projects on time.
 
-I have a proven track record of success in delivering complex technical projects on time and to specification and have a reputation for quickly understanding and solving even the most challenging problems.
-
-I am motivated to apply my acquired skills and knowledge to address contemporary challenges in our society, creating innovative solutions for the betterment of mankind
-
-![home](https://user-images.githubusercontent.com/64016811/198817377-0eef049f-5ef0-414e-97e1-a1cba823346f.png)
+My motivation lies in using my skills to tackle contemporary challenges, crafting innovative solutions for the betterment of society.
 
 ### Problem : 
 
 Diabetes is a chronic (long-lasting) health condition that affects how your body turns food into energy. Your body breaks down most of the food you eat into sugar (glucose) and releases it into your bloodstream. When your blood sugar goes up, it signals your pancreas to release insulin.
+
+![home](https://user-images.githubusercontent.com/64016811/198817377-0eef049f-5ef0-414e-97e1-a1cba823346f.png)
 
 ### Solution:
 
