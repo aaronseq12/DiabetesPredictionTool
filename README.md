@@ -1,5 +1,8 @@
 # Diabetes-Prediction-System
 
+About me: 
+My name is Aaron Sequeira, I am currently pursuing my Btech in Information Technology from Manipal University Jaipur. 
+
 ![home](https://user-images.githubusercontent.com/64016811/198817377-0eef049f-5ef0-414e-97e1-a1cba823346f.png)
 
 ### Problem : 
@@ -44,6 +47,3 @@ Building an application that can predict the onset of diabetes or the possible c
 ![g2](https://user-images.githubusercontent.com/64016811/198821377-9f2a046c-99b7-4b06-aab2-ec1a3eb0bf95.png)
 
 ### Made with 💙 by:
-![maker](https://user-images.githubusercontent.com/64016811/198821378-09bf5224-a537-4154-9df9-d9b29da95af7.jpg)
-
-## MAINAK CHAUDHURI
