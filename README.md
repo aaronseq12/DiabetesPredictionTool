@@ -1,7 +1,13 @@
 # Diabetes-Prediction-System
 
 About me: 
-My name is Aaron Sequeira, I am currently pursuing my Btech in Information Technology from Manipal University Jaipur. 
+My name is Aaron Sequeira, I am currently pursuing my Btech in Information Technology from Manipal University Jaipur, where I am building a solid foundation in various facets of the field. My keen interest spans several domains, including Full stack web development, Cloud Computing with a focus on AWS, Data Analytics, Machine Learning, and Business & Project Management.
+
+In addition to my technical skills, I am a strong communicator and team player and can work effectively with technical and non-technical stakeholders. I am highly motivated and thrive in fast-paced, dynamic environments where I can utilize my skills and expertise to drive positive outcomes.
+
+I have a proven track record of success in delivering complex technical projects on time and to specification and have a reputation for quickly understanding and solving even the most challenging problems.
+
+I am motivated to apply my acquired skills and knowledge to address contemporary challenges in our society, creating innovative solutions for the betterment of mankind
 
 ![home](https://user-images.githubusercontent.com/64016811/198817377-0eef049f-5ef0-414e-97e1-a1cba823346f.png)
 
@@ -45,5 +51,3 @@ Building an application that can predict the onset of diabetes or the possible c
 ![4](https://user-images.githubusercontent.com/64016811/198821373-2b3c5b83-824d-4297-bf14-7848af48b967.png)
 ![g1](https://user-images.githubusercontent.com/64016811/198821376-406c0d3a-3f6c-4f8f-90e5-403e7ccc5d02.png)
 ![g2](https://user-images.githubusercontent.com/64016811/198821377-9f2a046c-99b7-4b06-aab2-ec1a3eb0bf95.png)
-
-### Made with 💙 by:
