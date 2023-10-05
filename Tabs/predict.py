@@ -1,7 +1,7 @@
 """This modules contains data about prediction page"""
 
 # Import necessary modules
-import streamlit as 
+import streamlit as st
 
 # Import necessary functions from web_functions
 from web_functions import predict
