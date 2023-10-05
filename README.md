@@ -1,7 +1,7 @@
 # Diabetes-Prediction-System
 
 About me: 
-My name is Aaron Sequeira, I am currently pursuing my Btech in Information Technology from Manipal University Jaipur, where I am building a solid foundation in various facets of the field. My keen interest spans several domains, including Full stack web development, Cloud Computing with a focus on AWS, Data Analytics and Machine Learning
+My name is Aaron Sequeira, I am currently pursuing my Btech in Information Technology from Manipal University Jaipur, where I am building a solid foundation in various facets of the field. My keen interest spans several domains, including Full stack web development, Cloud Computing with a focus on AWS, Data Analytics and Machine Learning.
 
 My motivation lies in using my skills to tackle contemporary challenges, crafting innovative solutions for the betterment of society.
 
