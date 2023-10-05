@@ -3,7 +3,7 @@
 # Import necessary modules
 import warnings
 import matplotlib.pyplot as plt
-import seaborn as sns
+import seaborn as sn
 
 from sklearn import tree
 import streamlit as st
