@@ -2,7 +2,7 @@
 
 # Import necessary modules
 import numpy as np
-import pandas as 
+import pandas as p
 from sklearn.tree import DecisionTreeClassifier
 import streamlit as st
 
