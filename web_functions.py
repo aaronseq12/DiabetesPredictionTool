@@ -1,7 +1,7 @@
 """This module contains necessary function needed"""
 
 # Import necessary modules
-import numpy as n
+import numpy as np
 import pandas as 
 from sklearn.tree import DecisionTreeClassifier
 import streamlit as st
