@@ -3,8 +3,6 @@
 About me: 
 My name is Aaron Sequeira, I am currently pursuing my Btech in Information Technology from Manipal University Jaipur, where I am building a solid foundation in various facets of the field. My keen interest spans several domains, including Full stack web development, Cloud Computing with a focus on AWS, Data Analytics and Machine Learning.
 
-My motivation lies in using my skills to tackle contemporary challenges, crafting innovative solutions for the betterment of society.
-
 ### Problem : 
 
 Diabetes is a chronic (long-lasting) health condition that affects how your body turns food into energy. Your body breaks down most of the food you eat into sugar (glucose) and releases it into your bloodstream. When your blood sugar goes up, it signals your pancreas to release insulin.
