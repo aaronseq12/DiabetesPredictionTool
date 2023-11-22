@@ -10,8 +10,6 @@ Since I have enrolled in the course of foundation of data science, with the help
 
 Diabetes is a chronic (long-lasting) health condition that affects how your body turns food into energy. Your body breaks down most of the food you eat into sugar (glucose) and releases it into your bloodstream. When your blood sugar goes up, it signals your pancreas to release insulin.
 
-![home](https://user-images.githubusercontent.com/64016811/198817377-0eef049f-5ef0-414e-97e1-a1cba823346f.png)
-
 ### Solution:
 
 Diabetes Prediction and proper medical procedures to cure it. The medical show if of the Doctors'. But as Engineers, we can take the first step, i.e. prediction.
