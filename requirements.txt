@@ -1,6 +1,7 @@
 The main libraries in python for running this predictor tool:
-streamlit
-numpy
-matplotlib
-pandas
-scikit_learn
+```matplotlib```
+```pandas```
+```Keras```
+```NumPy```
+```seaborn```
+```scikit-learn```
