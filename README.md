@@ -15,4 +15,4 @@ Diabetes is a chronic (long-lasting) health condition that affects how your body
 Diabetes Prediction and proper medical procedures to cure it. The medical show if of the Doctors'. But as Engineers, we can take the first step, i.e. prediction.
 
 ### Idea: 
-Building an application that can predict the onset of diabetes or the possible causes of it by indicating the highly relevant factors. 
+Building an application that can predict the onset of diabetes or the possible causes of it by indicating the highly relevant factors. A multi-layer perceptron which predicts whether an individual is susceptible to diabetes. The model has been trained on the [Pima Indians Diabetes Database](https://www.kaggle.com/uciml/pima-indians-diabetes-database), provided by the National Institute of Diabetes and Digestive and Kidney Diseases.
