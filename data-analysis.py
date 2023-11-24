@@ -1,5 +1,6 @@
 # exploratory data analysis
-# created by alex mounsey
+# created by Aaron Emmanuel Xavier Sequeira
+
 
 # import modules
 from matplotlib import pyplot as plt
