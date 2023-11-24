@@ -1,4 +1,4 @@
-seaborn
+The main libraries in python for running this predictor tool:
 streamlit
 numpy
 matplotlib
