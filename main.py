@@ -1,7 +1,4 @@
-# 
-# created by alex mounsey
-
-# import modules
+# created by Aaron Emmanuel Xavier Sequeira
 from preprocessing import preprocess
 
 from sklearn.model_selection import train_test_split
