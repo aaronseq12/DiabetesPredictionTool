@@ -1,5 +1,5 @@
 # preprocessing dataset
-# created by alex mounsey
+# created by Aaron Emmanuel Xavier Sequeira
 
 # import modules
 from sklearn import preprocessing
