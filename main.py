@@ -1,4 +1,4 @@
-"""This is the main module to run the app""
+"""This is the main module to run the app"""
 
 # Importing the necessary Python modules.
 import streamlit as st
