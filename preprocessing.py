@@ -1,70 +1,72 @@
-# preprocessing dataset
-# created by Aaron Emmanuel Xavier Sequeira
+# preprocessing.py
+# Updated by: Aaron Emmanuel Xavier Sequeira
+# Description: This script provides a function to preprocess the diabetes dataset.
+# It handles missing values by imputing them with the mean and standardizes the features.
 
-# import modules
-from sklearn import preprocessing
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import StandardScaler
 
 def preprocess(dataset):
-    # check for missing values
-    print("Missing Values:")
-    print("---------------")
-    print(dataset.isnull().any())
-    print("")
+    """
+    Preprocesses the input diabetes dataset.
 
-    # print statistical summary of the dataset
-    print("Statistical Summary:")
-    print("--------------------")
+    Args:
+        dataset (pd.DataFrame): The raw diabetes dataset.
+
+    Returns:
+        tuple: A tuple containing:
+            - pd.DataFrame: The preprocessed and scaled dataset.
+            - StandardScaler: The fitted scaler object used for standardization.
+    """
+    print("--- Initial Data ---")
+    print(dataset.head())
+    print("\n--- Statistical Summary (Initial) ---")
     print(dataset.describe())
-    print("")
+    
+    # Identifying zero values in columns where zero is not a valid value
+    cols_to_impute = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
+    
+    print("\n--- Replacing 0 values with NaN ---")
+    for col in cols_to_impute:
+        dataset[col] = dataset[col].replace(0, np.nan)
+        
+    # Imputing NaN values with the mean of the respective column
+    print("--- Imputing NaN values with mean ---")
+    for col in cols_to_impute:
+        dataset[col] = dataset[col].fillna(dataset[col].mean())
 
-    # print the number of missing values within the dataset
-    print("Number of Missing Values:")
-    print("-------------------------")
-    for col in dataset.columns:
-        missing_row = dataset.loc[dataset[col] == 0].shape[0]
-        print(col + ": " + str(missing_row))
-    print("")
+    print("\n--- Data after imputation ---")
+    print(dataset.head())
+    print("\n--- Statistical Summary (After Imputation) ---")
+    print(dataset.describe())
 
-    # replace missing values with 'NaN'
-    print("Replacing values of '0' with 'NaN'...")
-    dataset['Glucose'] = dataset['Glucose'].replace(0, np.NaN)
-    dataset['BloodPressure'] = dataset['BloodPressure'].replace(0, np.NaN)
-    dataset['SkinThickness'] = dataset['SkinThickness'].replace(0, np.NaN)
-    dataset['Insulin'] = dataset['Insulin'].replace(0, np.NaN)
-    dataset['BMI'] = dataset['BMI'].replace(0, np.NaN)
-    print("")
+    # Data Standardization
+    print("\n--- Standardizing Data ---")
+    X = dataset.drop('Outcome', axis=1)
+    y = dataset['Outcome']
+    
+    # Initialize the StandardScaler
+    scaler = StandardScaler()
+    
+    # Fit and transform the features
+    X_scaled = scaler.fit_transform(X)
+    
+    # Create a new DataFrame with the scaled features
+    dataset_scaled = pd.DataFrame(X_scaled, columns=X.columns)
+    
+    # Add the 'Outcome' column back
+    dataset_scaled['Outcome'] = y.values
+    
+    print("\n--- Standardized Dataset Summary ---")
+    print(dataset_scaled.describe().round(2))
+    
+    return dataset_scaled, scaler
 
-    # confirm that these columns no longer have values of zero
-    print("Number of Entries Equal to Zero:")
-    print("--------------------------------")
-    for col in dataset.columns:
-        missing_row = dataset.loc[dataset[col] == 0].shape[0]
-        print(col + ": " + str(missing_row))
-
-    # replace 'NaN' values with the mean of non-missing values
-    print("Replacing 'NaN' values with the mean of non-missing values...")
-    dataset['Glucose'] = dataset['Glucose'].fillna(dataset['Glucose'].mean())
-    dataset['BloodPressure'] = dataset['BloodPressure'].fillna(dataset['BloodPressure'].mean())
-    dataset['SkinThickness'] = dataset['SkinThickness'].fillna(dataset['SkinThickness'].mean())
-    dataset['Insulin'] = dataset['Insulin'].fillna(dataset['Insulin'].mean())
-    dataset['BMI'] = dataset['BMI'].fillna(dataset['BMI'].mean())
-    print("")
-
-
-    # data standardization
-    print("Standardizing Data...")
-    datasetScaled = preprocessing.scale(dataset) # scale dataset
-    datasetScaled = pd.DataFrame(datasetScaled, columns=dataset.columns) # convert scaled dataset to pandas dataframe
-    datasetScaled['Outcome'] = dataset['Outcome'] # copy outcome column from original dataset
-    dataset = datasetScaled
-    print("")
-
-    # print statistical summary of the standardized dataset
-    print("Standardized Dataset Summary:")
-    print("-----------------------------")
-    print(dataset.describe().loc[['mean', 'std', 'max'],].round(2).abs())
-    print()
-
-    return dataset
+if __name__ == '__main__':
+    # Example usage:
+    df = pd.read_csv('diabetes.csv')
+    processed_df, fitted_scaler = preprocess(df)
+    print("\n--- Preprocessing Complete ---")
+    print("Processed DataFrame head:")
+    print(processed_df.head())
