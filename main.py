@@ -1,79 +1,94 @@
-# created by Aaron Emmanuel Xavier Sequeira
+# main.py
+# Updated by: Aaron Emmanuel Xavier Sequeira
+# Description: This script handles the complete machine learning pipeline:
+# 1. Loads and preprocesses the dataset.
+# 2. Splits the data into training and testing sets.
+# 3. Trains an XGBoost classifier.
+# 4. Evaluates the model's performance.
+# 5. Saves the trained model and the data scaler for future use.
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from xgboost import XGBClassifier
+import joblib
+import seaborn as sns
+import matplotlib.pyplot as plt
 from preprocessing import preprocess
 
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import roc_curve
+def main():
+    """
+    Main function to run the diabetes prediction model training and evaluation.
+    """
+    # 1. Load and Preprocess Data
+    print("Loading and preprocessing data...")
+    dataset = pd.read_csv('diabetes.csv')
+    # The preprocess function now returns the processed data and the scaler
+    processed_data, scaler = preprocess(dataset)
+    print("Data preprocessing complete.")
+    print("-" * 30)
 
-from keras.models import Sequential
-from keras.layers import Dense
+    # 2. Split Dataset
+    print("Splitting the dataset...")
+    X = processed_data.loc[:, processed_data.columns != 'Outcome']
+    y = processed_data.loc[:, 'Outcome']
+    
+    # Split data into 80% training and 20% testing
+    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    print(f"Training set shape: {x_train.shape}")
+    print(f"Testing set shape: {x_test.shape}")
+    print("-" * 30)
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-import pandas as pd
-import numpy as np
-import matplotlib
+    # 3. Train XGBoost Model
+    print("Training the XGBoost model...")
+    # Initialize the XGBoost classifier with hyperparameters tuned for performance
+    model = XGBClassifier(
+        objective='binary:logistic',
+        eval_metric='logloss',
+        use_label_encoder=False,
+        n_estimators=200,
+        learning_rate=0.1,
+        max_depth=4,
+        subsample=0.8,
+        colsample_bytree=0.8,
+        random_state=42
+    )
+    
+    model.fit(x_train, y_train)
+    print("Model training complete.")
+    print("-" * 30)
 
-# import and preprocess dataset
-dataset = pd.read_csv('diabetes.csv')
-dataset = preprocess(dataset)
+    # 4. Evaluate the Model
+    print("Evaluating the model...")
+    # Predictions on the training set
+    y_train_pred = model.predict(x_train)
+    train_accuracy = accuracy_score(y_train, y_train_pred)
+    print(f"Training Accuracy: {train_accuracy * 100:.2f}%")
 
-# split dataset into input features and target variables
-print("Splitting dataset...")
-inputFeatures = dataset.loc[:, dataset.columns != 'Outcome']
-targetVariable = dataset.loc[:, 'Outcome']
-# split data into training (80%) and testing (20%)
-xTrain, xTest, yTrain, yTest = train_test_split(inputFeatures, targetVariable, test_size=0.2)
-# further split training split into training (80%) and validation (20%)
-xTrain, xVal, yTrain, yVal = train_test_split(xTrain, yTrain, test_size=0.2)
-print("")
+    # Predictions on the testing set
+    y_test_pred = model.predict(x_test)
+    test_accuracy = accuracy_score(y_test, y_test_pred)
+    print(f"Testing Accuracy: {test_accuracy * 100:.2f}%")
+    print("\nClassification Report on Test Data:")
+    print(classification_report(y_test, y_test_pred))
+    
+    # Confusion Matrix
+    c_matrix = confusion_matrix(y_test, y_test_pred)
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(c_matrix, annot=True, fmt='d', cmap='Blues', 
+                xticklabels=['No Diabetes', 'Diabetes'], 
+                yticklabels=['No Diabetes', 'Diabetes'])
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.title('Confusion Matrix')
+    plt.show()
+    print("-" * 30)
 
-# define neural network structure
-print("Building model...")
-model = Sequential()
-# first hidden layer consists of 32 nodes. The input dimensions are 8 due to there being 8 columns in the training data
-model.add(Dense(32, activation='relu', input_dim=8))
-# the second hidden layer consists of 16 nodes
-model.add(Dense(16, activation='relu'))
-# the output layer consists of a single node as we are dealing with binary classification
-# the sigmoid activation function 'squashes' the output between 0 and 1
-model.add(Dense(1, activation='sigmoid'))
-print("")
+    # 5. Save the Model and Scaler
+    print("Saving the model and scaler...")
+    joblib.dump(model, 'diabetes_model.pkl')
+    joblib.dump(scaler, 'scaler.pkl')
+    print("Model and scaler saved successfully as 'diabetes_model.pkl' and 'scaler.pkl'.")
 
-# compile and train the model
-print("Compiling and training model...")
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-model.fit(xTrain, yTrain, epochs=200, verbose=False)
-print("")
-
-# accuracy results
-print("Results:")
-print("--------")
-scores = model.evaluate(xTrain, yTrain, verbose=False)
-print("Training Accuracy: %.2f%%\n" % (scores[1] * 100))
-scores = model.evaluate(xTest, yTest, verbose=False)
-print("Testing Accuracy: %.2f%%\n" % (scores[1] * 100))
-
-# confusion matrix
-yTestPredict = model.predict_classes(xTest)
-cMatrix = confusion_matrix(yTest, yTestPredict)
-
-ax = sns.heatmap(cMatrix, annot=True, xticklabels=['No Diabetes', 'Diabetes'], yticklabels=['NoDiabetes', 'Diabetes'], cbar=False, cmap='Blues')
-ax.set_xlabel("Predicted Value")
-ax.set_ylabel("Actual Value")
-
-plt.show()
-plt.clf()
-
-# ROC curve
-yTestPredictProbability = model.predict(xTest)
-FPR, TPR, _ = roc_curve(yTest, yTestPredictProbability)
-
-plt.plot(FPR, TPR)
-plt.plot([0,1], [0,1], '--', color='black')
-plt.title('ROC Curve')
-plt.xlabel('False-Positive Rate')
-plt.ylabel('True-Positive Rate')
-
-plt.show()
-plt.clf()
+if __name__ == '__main__':
+    main()
