@@ -1,5 +1,5 @@
 # app.py Flask App
-# Created by: Aaron Emmanuel Xavier Sequeira
+# Author: Aaron Emmanuel Xavier Sequeira
 # Description: This script creates a Flask web application to serve the
 # trained diabetes prediction model. It provides an API endpoint to
 # receive patient data and return a prediction.
@@ -8,14 +8,15 @@ from flask import Flask, request, jsonify, render_template
 import joblib
 import numpy as np
 import pandas as pd
+import os
 
 # Initialize the Flask application
 app = Flask(__name__)
 
 # Load the trained model and the scaler
 try:
-    model = joblib.load('diabetes_model.pkl')
-    scaler = joblib.load('scaler.pkl')
+    model = joblib.load('models/diabetes_model.pkl')
+    scaler = joblib.load('models/scaler.pkl')
     print("Model and scaler loaded successfully.")
 except FileNotFoundError:
     print("Error: Model or scaler not found. Please run main.py to train and save them.")
@@ -28,7 +29,7 @@ def home():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
-def predict():
+def predict_diabetes():
     """
     Handle prediction requests from the web form.
     """
@@ -37,37 +38,37 @@ def predict():
 
     try:
         # Get data from the POST request
-        data = request.get_json(force=True)
+        patient_data = request.get_json(force=True)
         
         # The order of features must match the training data
-        features = [
-            data['Pregnancies'],
-            data['Glucose'],
-            data['BloodPressure'],
-            data['SkinThickness'],
-            data['Insulin'],
-            data['BMI'],
-            data['DiabetesPedigreeFunction'],
-            data['Age']
+        feature_values = [
+            patient_data['Pregnancies'],
+            patient_data['Glucose'],
+            patient_data['BloodPressure'],
+            patient_data['SkinThickness'],
+            patient_data['Insulin'],
+            patient_data['BMI'],
+            patient_data['DiabetesPedigreeFunction'],
+            patient_data['Age']
         ]
 
         # Convert to a numpy array for scaling
-        final_features = np.array(features).reshape(1, -1)
+        final_features = np.array(feature_values).reshape(1, -1)
         
         # Scale the features using the loaded scaler
         scaled_features = scaler.transform(final_features)
         
         # Make prediction
         prediction = model.predict(scaled_features)
-        prediction_proba = model.predict_proba(scaled_features)
+        prediction_probability = model.predict_proba(scaled_features)
         
         # Get the confidence score
-        confidence = prediction_proba[0][prediction[0]]
+        confidence_score = prediction_probability[0][prediction[0]]
         
         # Return the result as JSON
         return jsonify({
             'prediction': int(prediction[0]),
-            'confidence': float(confidence)
+            'confidence': float(confidence_score)
         })
 
     except Exception as e:
