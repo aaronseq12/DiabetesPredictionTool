@@ -16,36 +16,36 @@
             <form id="prediction-form">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="Pregnancies">Pregnancies</label>
-                        <input type="number" id="Pregnancies" name="Pregnancies" placeholder="e.g., 1" required>
+                        <label for="pregnancies">Pregnancies</label>
+                        <input type="number" id="pregnancies" name="Pregnancies" placeholder="e.g., 1" required>
                     </div>
                     <div class="form-group">
-                        <label for="Glucose">Glucose</label>
-                        <input type="number" id="Glucose" name="Glucose" placeholder="e.g., 120" required>
+                        <label for="glucose">Glucose</label>
+                        <input type="number" id="glucose" name="Glucose" placeholder="e.g., 120" required>
                     </div>
                     <div class="form-group">
-                        <label for="BloodPressure">Blood Pressure (mm Hg)</label>
-                        <input type="number" id="BloodPressure" name="BloodPressure" placeholder="e.g., 72" required>
+                        <label for="blood-pressure">Blood Pressure (mm Hg)</label>
+                        <input type="number" id="blood-pressure" name="BloodPressure" placeholder="e.g., 72" required>
                     </div>
                     <div class="form-group">
-                        <label for="SkinThickness">Skin Thickness (mm)</label>
-                        <input type="number" id="SkinThickness" name="SkinThickness" placeholder="e.g., 23" required>
+                        <label for="skin-thickness">Skin Thickness (mm)</label>
+                        <input type="number" id="skin-thickness" name="SkinThickness" placeholder="e.g., 23" required>
                     </div>
                     <div class="form-group">
-                        <label for="Insulin">Insulin (mu U/ml)</label>
-                        <input type="number" id="Insulin" name="Insulin" placeholder="e.g., 30.5" required>
+                        <label for="insulin">Insulin (mu U/ml)</label>
+                        <input type="number" id="insulin" name="Insulin" placeholder="e.g., 30.5" required>
                     </div>
                     <div class="form-group">
-                        <label for="BMI">BMI</label>
-                        <input type="number" step="0.1" id="BMI" name="BMI" placeholder="e.g., 32.1" required>
+                        <label for="bmi">BMI</label>
+                        <input type="number" step="0.1" id="bmi" name="BMI" placeholder="e.g., 32.1" required>
                     </div>
                     <div class="form-group">
-                        <label for="DiabetesPedigreeFunction">Diabetes Pedigree Function</label>
-                        <input type="number" step="0.001" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" placeholder="e.g., 0.471" required>
+                        <label for="diabetes-pedigree-function">Diabetes Pedigree Function</label>
+                        <input type="number" step="0.001" id="diabetes-pedigree-function" name="DiabetesPedigreeFunction" placeholder="e.g., 0.471" required>
                     </div>
                     <div class="form-group">
-                        <label for="Age">Age (years)</label>
-                        <input type="number" id="Age" name="Age" placeholder="e.g., 50" required>
+                        <label for="age">Age (years)</label>
+                        <input type="number" id="age" name="Age" placeholder="e.g., 50" required>
                     </div>
                 </div>
                 <div class="button-container">
@@ -63,8 +63,8 @@
     </div>
 
     <script>
-        document.getElementById('prediction-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
+        document.getElementById('prediction-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
             
             const resultSection = document.getElementById('result-section');
             const loader = document.getElementById('loader');
@@ -77,9 +77,9 @@
             confidenceScore.textContent = '';
 
             const formData = new FormData(this);
-            const data = {};
+            const patientData = {};
             formData.forEach((value, key) => {
-                data[key] = parseFloat(value);
+                patientData[key] = parseFloat(value);
             });
 
             try {
@@ -88,7 +88,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data),
+                    body: JSON.stringify(patientData),
                 });
 
                 const result = await response.json();
