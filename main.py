@@ -1,5 +1,5 @@
 # main.py
-# Updated by: Aaron Emmanuel Xavier Sequeira
+# Author: Aaron Emmanuel Xavier Sequeira
 # Description: This script handles the complete machine learning pipeline:
 # 1. Loads and preprocesses the dataset.
 # 2. Splits the data into training and testing sets.
@@ -14,29 +14,35 @@ from xgboost import XGBClassifier
 import joblib
 import seaborn as sns
 import matplotlib.pyplot as plt
-from preprocessing import preprocess
+from preprocessing import preprocess_diabetes_data
+import os
 
-def main():
+def train_and_evaluate_model():
     """
     Main function to run the diabetes prediction model training and evaluation.
     """
     # 1. Load and Preprocess Data
     print("Loading and preprocessing data...")
-    dataset = pd.read_csv('diabetes.csv')
+    try:
+        diabetes_dataset = pd.read_csv('diabetes.csv')
+    except FileNotFoundError:
+        print("Error: 'diabetes.csv' not found. Please ensure the dataset is in the correct directory.")
+        return
+        
     # The preprocess function now returns the processed data and the scaler
-    processed_data, scaler = preprocess(dataset)
+    processed_data, scaler = preprocess_diabetes_data(diabetes_dataset)
     print("Data preprocessing complete.")
     print("-" * 30)
 
     # 2. Split Dataset
     print("Splitting the dataset...")
-    X = processed_data.loc[:, processed_data.columns != 'Outcome']
-    y = processed_data.loc[:, 'Outcome']
+    features = processed_data.drop('Outcome', axis=1)
+    target = processed_data['Outcome']
     
     # Split data into 80% training and 20% testing
-    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-    print(f"Training set shape: {x_train.shape}")
-    print(f"Testing set shape: {x_test.shape}")
+    X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42, stratify=target)
+    print(f"Training set shape: {X_train.shape}")
+    print(f"Testing set shape: {X_test.shape}")
     print("-" * 30)
 
     # 3. Train XGBoost Model
@@ -54,28 +60,28 @@ def main():
         random_state=42
     )
     
-    model.fit(x_train, y_train)
+    model.fit(X_train, y_train)
     print("Model training complete.")
     print("-" * 30)
 
     # 4. Evaluate the Model
     print("Evaluating the model...")
     # Predictions on the training set
-    y_train_pred = model.predict(x_train)
-    train_accuracy = accuracy_score(y_train, y_train_pred)
+    y_train_predictions = model.predict(X_train)
+    train_accuracy = accuracy_score(y_train, y_train_predictions)
     print(f"Training Accuracy: {train_accuracy * 100:.2f}%")
 
     # Predictions on the testing set
-    y_test_pred = model.predict(x_test)
-    test_accuracy = accuracy_score(y_test, y_test_pred)
+    y_test_predictions = model.predict(X_test)
+    test_accuracy = accuracy_score(y_test, y_test_predictions)
     print(f"Testing Accuracy: {test_accuracy * 100:.2f}%")
     print("\nClassification Report on Test Data:")
-    print(classification_report(y_test, y_test_pred))
+    print(classification_report(y_test, y_test_predictions))
     
     # Confusion Matrix
-    c_matrix = confusion_matrix(y_test, y_test_pred)
+    confusion_mat = confusion_matrix(y_test, y_test_predictions)
     plt.figure(figsize=(8, 6))
-    sns.heatmap(c_matrix, annot=True, fmt='d', cmap='Blues', 
+    sns.heatmap(confusion_mat, annot=True, fmt='d', cmap='Blues', 
                 xticklabels=['No Diabetes', 'Diabetes'], 
                 yticklabels=['No Diabetes', 'Diabetes'])
     plt.xlabel('Predicted')
@@ -86,9 +92,11 @@ def main():
 
     # 5. Save the Model and Scaler
     print("Saving the model and scaler...")
-    joblib.dump(model, 'diabetes_model.pkl')
-    joblib.dump(scaler, 'scaler.pkl')
-    print("Model and scaler saved successfully as 'diabetes_model.pkl' and 'scaler.pkl'.")
+    if not os.path.exists('models'):
+        os.makedirs('models')
+    joblib.dump(model, 'models/diabetes_model.pkl')
+    joblib.dump(scaler, 'models/scaler.pkl')
+    print("Model and scaler saved successfully in the 'models' directory.")
 
 if __name__ == '__main__':
-    main()
+    train_and_evaluate_model()
